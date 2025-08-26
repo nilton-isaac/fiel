@@ -1,0 +1,125 @@
+<!-- Back Button -->
+<div class="max-w-7xl mx-auto px-6 py-6">
+  <a routerLink="/" class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 rounded-lg transition-all duration-300 hover:scale-105 group">
+    <span class="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">arrow_back</span>
+    <span>Voltar para Home</span>
+  </a>
+</div>
+
+<!-- Store Content -->
+<div class="max-w-7xl mx-auto px-6 pb-16 space-y-12">
+  <!-- Header Section -->
+  <div class="text-center py-16">
+    <h1 class="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-white to-blue-400 bg-clip-text text-transparent">
+      Loja de Jogos
+    </h1>
+    <p class="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto leading-relaxed">
+      Descubra milhares de jogos incríveis em nossa vasta biblioteca espacial
+    </p>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="max-w-3xl mx-auto">
+    <div class="relative group">
+      <span class="material-symbols-outlined absolute left-6 top-1/2 transform -translate-y-1/2 text-white/50 group-focus-within:text-yellow-400 transition-colors duration-300">
+        search
+      </span>
+      <input
+        type="text"
+        class="w-full pl-16 pr-6 py-4 rounded-2xl bg-gradient-to-r from-white/5 to-white/10 backdrop-blur-sm border border-white/20 outline-none text-white placeholder-white/50 focus:border-yellow-400/50 transition-all duration-300 text-lg"
+        placeholder="Buscar jogos por nome..."
+        [value]="query()"
+        (input)="query.set(($any($event.target).value || '')) ; page.set(1)"
+      />
+      <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400/10 to-blue-400/10 opacity-0 group-focus-within:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+    </div>
+  </div>
+
+  <!-- Results Info -->
+  <div class="text-center">
+    <div *ngIf="query()" class="inline-block px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-xl border border-white/20">
+      <p class="text-lg text-white/80">
+        Mostrando <span class="font-semibold text-yellow-400">{{ filtered().length }}</span> resultado{{ filtered().length !== 1 ? 's' : '' }} para "<span class="font-semibold">{{ query() }}</span>"
+      </p>
+    </div>
+    <div *ngIf="!query()" class="inline-block px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-xl border border-white/20">
+      <p class="text-lg text-white/80">
+        <span class="font-semibold text-blue-400">{{ allApps().length }}</span> jogos disponíveis para exploração
+      </p>
+    </div>
+  </div>
+
+  <!-- Games Grid -->
+  <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    <a 
+      *ngFor="let app of paged()" 
+      [routerLink]="['/game', app.appid]"
+      class="group bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 hover:border-yellow-400/50 rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+    >
+      <!-- Game Cover Placeholder -->
+      <div class="aspect-video bg-gradient-to-br from-yellow-400/10 via-blue-400/10 to-purple-400/10 flex items-center justify-center relative overflow-hidden">
+        <span class="material-symbols-outlined text-5xl text-white/30 group-hover:text-yellow-400 transition-all duration-500 group-hover:scale-125">
+          sports_esports
+        </span>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      </div>
+      
+      <!-- Game Info -->
+      <div class="p-6">
+        <h3 class="font-bold text-lg text-white group-hover:text-yellow-400 transition-colors duration-300 line-clamp-2 mb-3">
+          {{ app.name }}
+        </h3>
+        <div class="text-sm text-white/50 mb-4">
+          AppID: <span class="font-mono">{{ app.appid }}</span>
+        </div>
+        
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 rounded-lg border border-yellow-400/30 text-sm font-medium text-white group-hover:from-yellow-400/30 group-hover:to-blue-400/30 transition-all duration-300">
+          <span>Ver Detalhes</span>
+          <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Pagination -->
+  <div class="flex items-center justify-center gap-6 pt-12">
+    <button 
+      class="px-6 py-3 rounded-xl border border-white/20 hover:border-yellow-400/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+      [disabled]="page() <= 1"
+      (click)="goTo(page()-1)"
+    >
+      <span class="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-1">chevron_left</span>
+      <span class="ml-2">Anterior</span>
+    </button>
+    
+    <div class="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-white/10 to-white/5 rounded-xl border border-white/20">
+      <span class="text-sm text-white/60">Página</span>
+      <span class="px-4 py-1 bg-yellow-400/20 text-yellow-400 rounded-lg text-lg font-bold border border-yellow-400/30">{{ page() }}</span>
+      <span class="text-sm text-white/60">de {{ totalPages() }}</span>
+    </div>
+    
+    <button 
+      class="px-6 py-3 rounded-xl border border-white/20 hover:border-yellow-400/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group"
+      [disabled]="page() >= totalPages()"
+      (click)="goTo(page()+1)"
+    >
+      <span class="mr-2">Próxima</span>
+      <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">chevron_right</span>
+    </button>
+  </div>
+
+  <!-- No Results -->
+  <div *ngIf="filtered().length === 0 && query()" class="text-center py-20">
+    <div class="text-white/40 text-8xl mb-6">🔍</div>
+    <h3 class="text-2xl font-bold mb-4 text-white">Nenhum jogo encontrado</h3>
+    <p class="text-white/60 mb-8 text-lg">Tente usar termos diferentes na sua busca espacial.</p>
+    <button 
+      class="px-8 py-4 bg-gradient-to-r from-yellow-400 to-blue-500 text-black font-bold rounded-xl hover:from-yellow-300 hover:to-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
+      (click)="query.set(''); page.set(1)"
+    >
+      Limpar Busca
+    </button>
+  </div>
+</div>
+
+

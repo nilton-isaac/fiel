@@ -1,0 +1,190 @@
+<app-header />
+
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <!-- Animated Space Background -->
+  <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div class="absolute inset-0 opacity-30">
+      <div class="stars"></div>
+      <div class="twinkling"></div>
+    </div>
+  </div>
+  
+  <div class="relative text-center z-10 px-6 max-w-6xl mx-auto">
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-4 mb-6">
+        <span class="material-symbols-outlined text-8xl text-yellow-400 animate-pulse">stars</span>
+        <span class="text-8xl md:text-9xl font-black bg-gradient-to-r from-yellow-400 via-white to-blue-400 bg-clip-text text-transparent">
+          Fiel
+        </span>
+      </div>
+    </div>
+    
+    <p class="text-2xl md:text-3xl text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed">
+      Descubra jogos incríveis e mergulhe em mundos extraordinários em nossa galáxia de entretenimento
+    </p>
+    
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a 
+        routerLink="/store" 
+        class="inline-block px-10 py-5 bg-gradient-to-r from-yellow-400 to-blue-500 text-black font-bold text-lg rounded-2xl hover:from-yellow-300 hover:to-blue-400 transition-all duration-500 hover:scale-110 shadow-2xl hover:shadow-yellow-400/25"
+      >
+        Explorar Jogos
+      </a>
+      <a 
+        href="#news" 
+        class="inline-block px-10 py-5 bg-white/10 hover:bg-white/20 text-white font-bold text-lg rounded-2xl border border-white/30 transition-all duration-500 hover:scale-110 backdrop-blur-sm"
+      >
+        Ver Notícias
+      </a>
+    </div>
+  </div>
+  
+  <!-- Floating Elements -->
+  <div class="absolute top-20 left-10 w-4 h-4 bg-yellow-400 rounded-full animate-ping opacity-75"></div>
+  <div class="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-ping opacity-75" style="animation-delay: 1s;"></div>
+  <div class="absolute bottom-40 left-20 w-2 h-2 bg-purple-400 rounded-full animate-ping opacity-75" style="animation-delay: 2s;"></div>
+</section>
+
+<!-- News Carousel Section -->
+<section id="news" class="py-24 bg-gradient-to-b from-slate-900/50 to-slate-800/50 backdrop-blur-sm">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">
+        Últimas Notícias
+      </h2>
+      <p class="text-xl text-white/70 max-w-2xl mx-auto">
+        Fique por dentro das novidades mais recentes do universo dos jogos
+      </p>
+    </div>
+    
+    <div *ngIf="news().length > 0; else noNews" class="relative">
+      <!-- News Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <article 
+          *ngFor="let item of news()" 
+          class="group bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden hover:border-yellow-400/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
+          appScrollReveal
+        >
+          <!-- News Image -->
+          <div class="aspect-video bg-gradient-to-br from-yellow-400/10 via-blue-400/10 to-purple-400/10 flex items-center justify-center relative overflow-hidden">
+            <span class="material-symbols-outlined text-5xl text-white/30 group-hover:text-yellow-400 transition-all duration-500 group-hover:scale-125">
+              article
+            </span>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          </div>
+          
+          <!-- News Content -->
+          <div class="p-8">
+            <h3 class="font-bold text-xl mb-4 line-clamp-2 text-white group-hover:text-yellow-400 transition-colors duration-300">{{ item.title }}</h3>
+            <p class="text-white/70 text-base mb-6 line-clamp-3 leading-relaxed" [innerHTML]="item.contents"></p>
+            
+            <div class="flex items-center justify-between text-sm text-white/50 mb-6">
+              <span class="font-medium">{{ item.author || 'Steam' }}</span>
+              <span class="px-3 py-1 bg-white/10 rounded-full text-xs">{{ item.feedlabel || 'Notícias' }}</span>
+            </div>
+            
+            <a 
+              [href]="item.url" 
+              target="_blank" 
+              class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 rounded-xl border border-yellow-400/30 text-sm font-medium text-white group-hover:from-yellow-400/30 group-hover:to-blue-400/30 transition-all duration-300 hover:scale-105"
+            >
+              <span>Ler mais</span>
+              <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+    
+    <ng-template #noNews>
+      <div class="text-center py-20">
+        <div class="text-white/40 text-8xl mb-6">📰</div>
+        <h3 class="text-2xl font-bold mb-4 text-white">Nenhuma notícia disponível</h3>
+        <p class="text-white/60 text-lg">As notícias dos jogos aparecerão aqui em breve.</p>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<!-- Trending Games Section -->
+<section class="py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">
+        Descubra Jogos Incríveis
+      </h2>
+      <p class="text-xl text-white/70 max-w-3xl mx-auto">
+        Explore nossa coleção de jogos em destaque e encontre sua próxima aventura espacial
+      </p>
+    </div>
+    
+    <div *ngIf="trending().length > 0; else noTrending" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div 
+        *ngFor="let game of trending()" 
+        class="group bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm border border-white/20 rounded-2xl overflow-hidden hover:border-yellow-400/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 hover:scale-105"
+        appScrollReveal
+      >
+        <!-- Game Cover -->
+        <div class="aspect-video bg-gradient-to-br from-yellow-400/10 via-blue-400/10 to-purple-400/10 flex items-center justify-center relative overflow-hidden">
+          <span class="material-symbols-outlined text-5xl text-white/30 group-hover:text-yellow-400 transition-all duration-500 group-hover:scale-125">
+            sports_esports
+          </span>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        </div>
+        
+        <!-- Game Info -->
+        <div class="p-6">
+          <h3 class="font-bold text-lg text-white group-hover:text-yellow-400 transition-colors duration-300 line-clamp-2 mb-3">
+            {{ game.name }}
+          </h3>
+          <div class="text-sm text-white/50 mb-4">
+            AppID: <span class="font-mono">{{ game.appid }}</span>
+          </div>
+          
+          <a 
+            [routerLink]="['/game', game.appid]"
+            class="inline-flex items-center gap-2 w-full justify-center px-4 py-3 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 rounded-xl border border-yellow-400/30 text-sm font-medium text-white group-hover:from-yellow-400/30 group-hover:to-blue-400/30 transition-all duration-300"
+          >
+            <span>Ver Detalhes</span>
+            <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    
+    <ng-template #noTrending>
+      <div class="text-center py-20">
+        <div class="text-white/40 text-8xl mb-6">🎮</div>
+        <h3 class="text-2xl font-bold mb-4 text-white">Nenhum jogo disponível</h3>
+        <p class="text-white/60 text-lg mb-8">Os jogos em destaque aparecerão aqui em breve.</p>
+        <a 
+          routerLink="/store" 
+          class="inline-block px-8 py-4 bg-gradient-to-r from-yellow-400 to-blue-500 text-black font-bold rounded-xl hover:from-yellow-300 hover:to-blue-400 transition-all duration-300 hover:scale-105 shadow-lg"
+        >
+          Ver Todos os Jogos
+        </a>
+      </div>
+    </ng-template>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-24 bg-gradient-to-b from-slate-800/50 to-slate-900/50 backdrop-blur-sm">
+  <div class="max-w-5xl mx-auto text-center px-6">
+    <h2 class="text-5xl font-bold mb-8 bg-gradient-to-r from-yellow-400 to-blue-400 bg-clip-text text-transparent">
+      Pronto para começar sua jornada?
+    </h2>
+    <p class="text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+      Explore nossa vasta coleção de jogos e encontre sua próxima aventura em mundos infinitos
+    </p>
+    <a 
+      routerLink="/store" 
+      class="inline-block px-12 py-6 bg-gradient-to-r from-yellow-400 to-blue-500 text-black font-bold text-xl rounded-2xl hover:from-yellow-300 hover:to-blue-400 transition-all duration-500 hover:scale-110 shadow-2xl hover:shadow-yellow-400/25"
+    >
+      Começar a Explorar
+    </a>
+  </div>
+</section>
+
+

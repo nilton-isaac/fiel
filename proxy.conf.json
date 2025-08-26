@@ -1,0 +1,28 @@
+[
+  {
+    "context": [
+      "/steamapi"
+    ],
+    "target": "https://api.steampowered.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "pathRewrite": {
+      "^/steamapi": ""
+    }
+  },
+  {
+    "context": [
+      "/storeapi"
+    ],
+    "target": "https://store.steampowered.com",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "pathRewrite": {
+      "^/storeapi": ""
+    }
+  }
+]
+
+

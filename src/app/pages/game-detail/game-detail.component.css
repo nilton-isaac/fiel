@@ -1,0 +1,4 @@
+:host { display: block; }
+.prose :where(p,ul,ol){ color: rgba(255,255,255,0.75); }
+
+

@@ -1,0 +1,170 @@
+<!-- Back Button -->
+<div class="max-w-7xl mx-auto px-6 py-6">
+  <app-back-button backRoute="/store" label="Voltar para a Loja" />
+</div>
+
+<!-- Game Details -->
+<div class="max-w-7xl mx-auto px-6 pb-16" *ngIf="detail() as game; else loading">
+  <!-- Hero Section -->
+  <div class="relative mb-12 rounded-2xl overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+    <img [src]="game.header_image" [alt]="game.name" class="w-full h-[500px] object-cover" />
+    <div class="absolute bottom-8 left-8 right-8">
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 drop-shadow-2xl">{{ game.name }}</h1>
+      <p class="text-white/90 text-xl max-w-3xl leading-relaxed" [innerHTML]="game.short_description"></p>
+    </div>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="grid lg:grid-cols-3 gap-12">
+    <!-- Left Column - Game Info -->
+    <div class="lg:col-span-2 space-y-8">
+      <!-- About the Game -->
+      <div class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+        <h2 class="text-3xl font-bold mb-6 text-white">Sobre o Jogo</h2>
+        <div class="prose prose-invert max-w-none text-lg leading-relaxed" [innerHTML]="game.about_the_game"></div>
+      </div>
+
+      <!-- Screenshots -->
+      <div *ngIf="game.screenshots?.length" class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+        <h2 class="text-3xl font-bold mb-6 text-white">Screenshots</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+          <img 
+            *ngFor="let screenshot of game.screenshots" 
+            [src]="screenshot.path_thumbnail" 
+            [alt]="'Screenshot de ' + game.name"
+            class="w-full rounded-xl cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105"
+            (click)="openImage(screenshot.path_full)"
+          />
+        </div>
+      </div>
+
+      <!-- Videos/Trailers -->
+      <div *ngIf="game.movies?.length" class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+        <h2 class="text-3xl font-bold mb-6 text-white">Vídeos e Trailers</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div *ngFor="let movie of game.movies" class="space-y-3">
+            <img [src]="movie.thumbnail" [alt]="movie.name" class="w-full rounded-xl" />
+            <h3 class="font-semibold text-lg text-white">{{ movie.name }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column - Game Details -->
+    <div class="space-y-8">
+      <!-- Price & Purchase -->
+      <div class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+        <div class="text-center">
+          <div *ngIf="game.is_free" class="text-3xl font-bold text-green-400 mb-4">
+            Gratuito para Jogar
+          </div>
+          <div *ngIf="!game.is_free && game.price_overview" class="space-y-3 mb-6">
+            <div *ngIf="game.price_overview.discount_percent > 0" class="text-lg text-green-400 font-semibold">
+              -{{ game.price_overview.discount_percent }}% OFF
+            </div>
+            <div class="text-4xl font-bold text-white">
+              {{ game.price_overview.final_formatted }}
+            </div>
+          </div>
+          <button class="w-full px-6 py-4 bg-gradient-to-r from-yellow-400 to-blue-500 text-black font-bold rounded-xl hover:from-yellow-300 hover:to-blue-400 transition-all duration-300 hover:scale-105 shadow-lg">
+            Adicionar ao Carrinho
+          </button>
+        </div>
+      </div>
+
+      <!-- Game Info -->
+      <div class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 space-y-6">
+        <h3 class="text-2xl font-bold text-white mb-6">Informações do Jogo</h3>
+        
+        <!-- Genres -->
+        <div *ngIf="game.genres?.length">
+          <h4 class="text-sm text-white/60 mb-3 font-medium">Gêneros</h4>
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let genre of game.genres" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm border border-white/20 transition-all duration-300 hover:scale-105">
+              {{ genre.description }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div *ngIf="game.categories?.length">
+          <h4 class="text-sm text-white/60 mb-3 font-medium">Categorias</h4>
+          <div class="flex flex-wrap gap-2">
+            <span *ngFor="let category of game.categories" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm border border-white/20 transition-all duration-300 hover:scale-105">
+              {{ category.description }}
+            </span>
+          </div>
+        </div>
+
+        <!-- Platforms -->
+        <div *ngIf="game.platforms">
+          <h4 class="text-sm text-white/60 mb-3 font-medium">Plataformas</h4>
+          <div class="flex gap-3">
+            <span *ngIf="game.platforms.windows" class="px-4 py-2 bg-blue-500/20 text-blue-300 rounded-lg text-sm border border-blue-500/30">
+              Windows
+            </span>
+            <span *ngIf="game.platforms.mac" class="px-4 py-2 bg-gray-500/20 text-gray-300 rounded-lg text-sm border border-gray-500/30">
+              Mac
+            </span>
+            <span *ngIf="game.platforms.linux" class="px-4 py-2 bg-orange-500/20 text-orange-300 rounded-lg text-sm border border-orange-500/30">
+              Linux
+            </span>
+          </div>
+        </div>
+
+        <!-- Release Date -->
+        <div *ngIf="game.release_date?.date">
+          <h4 class="text-sm text-white/60 mb-3 font-medium">Data de Lançamento</h4>
+          <p class="text-white text-lg">{{ game.release_date.date | date:'dd/MM/yyyy' }}</p>
+        </div>
+
+        <!-- Metacritic Score -->
+        <div *ngIf="game.metacritic?.score && game.metacritic?.url">
+          <h4 class="text-sm text-white/60 mb-3 font-medium">Metacritic</h4>
+          <div class="flex items-center gap-3">
+            <span class="px-4 py-2 bg-yellow-500/20 text-yellow-300 rounded-lg text-lg font-bold border border-yellow-500/30">
+              {{ game.metacritic.score }}
+            </span>
+            <a [href]="game.metacritic.url" target="_blank" class="text-blue-400 hover:text-blue-300 underline text-sm transition-colors">
+              Ver avaliação
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- External Links -->
+      <div *ngIf="game.website" class="bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20">
+        <h3 class="text-2xl font-bold text-white mb-6">Links Externos</h3>
+        <a 
+          [href]="game.website" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-300 hover:scale-105 border border-white/20"
+        >
+          <span class="material-symbols-outlined">language</span>
+          Site Oficial
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Template -->
+<ng-template #loading>
+  <div class="max-w-7xl mx-auto px-6 py-16">
+    <div *ngIf="loading()" class="text-center py-16">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-yellow-400 mx-auto mb-6"></div>
+      <p class="text-xl text-white/80">Carregando detalhes do jogo...</p>
+    </div>
+    
+    <div *ngIf="error()" class="text-center py-16">
+      <div class="text-red-400 text-8xl mb-6">⚠️</div>
+      <h2 class="text-3xl font-bold mb-4 text-white">Erro ao carregar</h2>
+      <p class="text-white/70 mb-8 text-lg">Não foi possível carregar os detalhes deste jogo.</p>
+      <app-back-button backRoute="/store" label="Voltar para a Loja" />
+    </div>
+  </div>
+</ng-template>
+
+

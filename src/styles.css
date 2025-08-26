@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: #0a0a0a;
+  color: #ffffff;
+  scroll-behavior: smooth;
+}
+
+/* Space Background Animations */
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.8"/><circle cx="80" cy="40" r="0.5" fill="white" opacity="0.6"/><circle cx="40" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="90" cy="10" r="0.8" fill="white" opacity="0.7"/><circle cx="10" cy="90" r="1.2" fill="white" opacity="0.8"/><circle cx="60" cy="30" r="0.6" fill="white" opacity="0.5"/><circle cx="30" cy="60" r="0.9" fill="white" opacity="0.6"/><circle cx="70" cy="70" r="1.1" fill="white" opacity="0.8"/><circle cx="50" cy="50" r="0.7" fill="white" opacity="0.4"/></svg>') repeat;
+  animation: stars 20s linear infinite;
+}
+
+.twinkling {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="0.5" fill="yellow" opacity="0.9"/><circle cx="75" cy="35" r="0.3" fill="yellow" opacity="0.7"/><circle cx="45" cy="75" r="0.4" fill="yellow" opacity="0.8"/><circle cx="85" cy="15" r="0.6" fill="yellow" opacity="0.6"/><circle cx="15" cy="85" r="0.5" fill="yellow" opacity="0.7"/><circle cx="65" cy="55" r="0.4" fill="yellow" opacity="0.5"/><circle cx="35" cy="45" r="0.3" fill="yellow" opacity="0.6"/><circle cx="55" cy="65" r="0.5" fill="yellow" opacity="0.8"/></svg>') repeat;
+  animation: twinkling 15s linear infinite;
+}
+
+@keyframes stars {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-100px); }
+}
+
+@keyframes twinkling {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+/* Scroll-driven Animations */
+@supports (animation-timeline: scroll()) {
+  .scroll-fade-in {
+    animation: fadeIn linear;
+    animation-timeline: scroll();
+    animation-range: entry 10% cover 50%;
+  }
+  
+  .scroll-slide-up {
+    animation: slideUp linear;
+    animation-timeline: scroll();
+    animation-range: entry 10% cover 50%;
+  }
+  
+  .scroll-scale {
+    animation: scale linear;
+    animation-timeline: scroll();
+    animation-range: entry 10% cover 50%;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scale {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #fbbf24, #3b82f6);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #f59e0b, #2563eb);
+}
+
+/* Smooth Transitions */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Enhanced Focus States */
+*:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* Loading Animations */
+.loading-pulse {
+  animation: loading-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes loading-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Glass Morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #fbbf24, #3b82f6, #8b5cf6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
