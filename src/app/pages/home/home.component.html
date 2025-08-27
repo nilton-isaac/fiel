@@ -84,9 +84,10 @@
               <span class="px-3 py-1 bg-white/10 rounded-full text-xs">{{ item.feedlabel || 'Notícias' }}</span>
             </div>
             
-            <a 
-              [href]="item.url" 
-              target="_blank" 
+            <a
+              [href]="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
               class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-400/20 to-blue-400/20 rounded-xl border border-yellow-400/30 text-sm font-medium text-white group-hover:from-yellow-400/30 group-hover:to-blue-400/30 transition-all duration-300 hover:scale-105"
             >
               <span>Ler mais</span>
