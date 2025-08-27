@@ -1,5 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NotificationService } from '../../services/notification.service';
 
 interface Tool {
   id: string;
@@ -53,6 +54,8 @@ interface Tool {
   styles: []
 })
 export class ToolsPanelComponent {
+  constructor(private notification: NotificationService) {}
+
   protected readonly tools = signal<Tool[]>([
     {
       id: 'library',
@@ -100,6 +103,6 @@ export class ToolsPanelComponent {
   ]);
 
   private showComingSoon(feature: string): void {
-    alert(`${feature} estará disponível em breve! 🚀`);
+    this.notification.show(`${feature} estará disponível em breve! 🚀`);
   }
 }
