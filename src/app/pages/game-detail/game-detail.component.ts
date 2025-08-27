@@ -3,11 +3,13 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SteamService, SteamAppDetails } from '../../services/steam.service';
 import { BackButtonComponent } from '../../components/back-button/back-button.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
 @Component({
   selector: 'app-game-detail',
   standalone: true,
-  imports: [CommonModule, BackButtonComponent],
+  imports: [CommonModule, BackButtonComponent, HeaderComponent, ScrollRevealDirective],
   templateUrl: './game-detail.component.html',
   styleUrl: './game-detail.component.css'
 })
@@ -50,7 +52,16 @@ export class GameDetailComponent implements OnInit {
   }
 
   protected openImage(imageUrl: string): void {
-    window.open(imageUrl, '_blank');
+    if (imageUrl) {
+      window.open(imageUrl, '_blank');
+    }
+  }
+
+  protected onImageError(event: Event): void {
+    const img = event.target as HTMLImageElement;
+    // Fallback para imagem padrão quando houver erro
+    img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMzM0MTU1Ii8+CjxwYXRoIGQ9Ik0yMDAgMTUwTDE1MCAxMDBIMjUwTDIwMCAxNTBaIiBmaWxsPSIjNjQ3NDhiIi8+Cjx0ZXh0IHg9IjIwMCIgeT0iMjAwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjQ3NDhiIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTYiPkltYWdlbSBuw6NvIGRpc3BvbsOtdmVsPC90ZXh0Pgo8L3N2Zz4K';
+    img.alt = 'Imagem não disponível';
   }
 }
 

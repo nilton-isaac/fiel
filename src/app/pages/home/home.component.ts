@@ -1,15 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { HeaderComponent } from '../../components/header/header.component';
-import { NgFor, NgStyle } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 import { SteamService, SteamApp, FeaturedCategoriesResponse } from '../../services/steam.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, NgFor, NgStyle, RouterLink, GameCardComponent, ScrollRevealDirective],
+  imports: [HeaderComponent, CommonModule, RouterLink, ScrollRevealDirective],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

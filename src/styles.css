@@ -4,80 +4,43 @@
 
 :root {
   color-scheme: dark;
+  --sunset-orange: #f97316;
+  --sunset-orange-light: #fb923c;
+  --sunset-orange-dark: #ea580c;
+  --deep-blue: #0f172a;
+  --deep-blue-light: #1e3a8a;
+  --slate-dark: #020617;
+  --slate-medium: #334155;
+  --slate-light: #64748b;
 }
 
 html, body {
-  background: #0a0a0a;
-  color: #ffffff;
+  background: #020617;
+  color: #f8fafc;
   scroll-behavior: smooth;
 }
 
-/* Space Background Animations */
-.stars {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="white" opacity="0.8"/><circle cx="80" cy="40" r="0.5" fill="white" opacity="0.6"/><circle cx="40" cy="80" r="1.5" fill="white" opacity="0.9"/><circle cx="90" cy="10" r="0.8" fill="white" opacity="0.7"/><circle cx="10" cy="90" r="1.2" fill="white" opacity="0.8"/><circle cx="60" cy="30" r="0.6" fill="white" opacity="0.5"/><circle cx="30" cy="60" r="0.9" fill="white" opacity="0.6"/><circle cx="70" cy="70" r="1.1" fill="white" opacity="0.8"/><circle cx="50" cy="50" r="0.7" fill="white" opacity="0.4"/></svg>') repeat;
-  animation: stars 20s linear infinite;
+/* Dark Background with Subtle Orange */
+.dark-gradient {
+  background: linear-gradient(135deg, var(--slate-dark) 0%, var(--deep-blue) 50%, var(--sunset-orange-dark) 100%);
 }
 
-.twinkling {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: transparent url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="25" cy="25" r="0.5" fill="yellow" opacity="0.9"/><circle cx="75" cy="35" r="0.3" fill="yellow" opacity="0.7"/><circle cx="45" cy="75" r="0.4" fill="yellow" opacity="0.8"/><circle cx="85" cy="15" r="0.6" fill="yellow" opacity="0.6"/><circle cx="15" cy="85" r="0.5" fill="yellow" opacity="0.7"/><circle cx="65" cy="55" r="0.4" fill="yellow" opacity="0.5"/><circle cx="35" cy="45" r="0.3" fill="yellow" opacity="0.6"/><circle cx="55" cy="65" r="0.5" fill="yellow" opacity="0.8"/></svg>') repeat;
-  animation: twinkling 15s linear infinite;
+/* Smooth Scroll Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@keyframes stars {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-100px); }
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-@keyframes twinkling {
-  0% { opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { opacity: 0.3; }
-}
-
-/* Scroll-driven Animations */
-@supports (animation-timeline: scroll()) {
-  .scroll-fade-in {
-    animation: fadeIn linear;
-    animation-timeline: scroll();
-    animation-range: entry 10% cover 50%;
-  }
-  
-  .scroll-slide-up {
-    animation: slideUp linear;
-    animation-timeline: scroll();
-    animation-range: entry 10% cover 50%;
-  }
-  
-  .scroll-scale {
-    animation: scale linear;
-    animation-timeline: scroll();
-    animation-range: entry 10% cover 50%;
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(50px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes scale {
-  from { transform: scale(0.8); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+/* Enhanced Focus States */
+*:focus-visible {
+  outline: 2px solid var(--sunset-orange);
+  outline-offset: 2px;
 }
 
 /* Custom Scrollbar */
@@ -86,16 +49,16 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.3);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #fbbf24, #3b82f6);
+  background: linear-gradient(to bottom, var(--sunset-orange), var(--deep-blue-light));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(to bottom, #f59e0b, #2563eb);
+  background: linear-gradient(to bottom, var(--sunset-orange-dark), var(--deep-blue));
 }
 
 /* Smooth Transitions */
@@ -103,12 +66,6 @@ html, body {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
-}
-
-/* Enhanced Focus States */
-*:focus-visible {
-  outline: 2px solid #fbbf24;
-  outline-offset: 2px;
 }
 
 /* Loading Animations */
@@ -132,14 +89,14 @@ html, body {
 
 /* Glass Morphism */
 .glass {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.3);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(51, 65, 85, 0.3);
 }
 
-/* Gradient Text */
-.gradient-text {
-  background: linear-gradient(135deg, #fbbf24, #3b82f6, #8b5cf6);
+/* Sunset Gradient Text */
+.sunset-text {
+  background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-orange-light));
   background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -150,4 +107,58 @@ html, body {
 @keyframes gradient-shift {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
+}
+
+/* Floating Elements */
+.floating {
+  animation: floating 6s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Story Timeline */
+.story-timeline {
+  position: relative;
+}
+
+.story-timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--sunset-orange), var(--deep-blue-light));
+  transform: translateX(-50%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .story-timeline::before {
+    left: 20px;
+  }
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(249, 115, 22, 0.25);
+}
+
+/* Minimalist Icons */
+.minimalist-icon {
+  color: #64748b;
+  transition: all 0.3s ease;
+}
+
+.minimalist-icon:hover {
+  color: var(--sunset-orange);
+  transform: scale(1.1);
 }
