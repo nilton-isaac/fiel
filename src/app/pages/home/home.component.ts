@@ -16,16 +16,15 @@ import { SteamService, SteamApp, FeaturedCategoriesResponse } from '../../servic
 export class HomeComponent implements OnInit {
   constructor(private steam: SteamService) {}
 
-  protected readonly featured = signal<SteamApp[]>([]);
   protected readonly news = signal<any[]>([]);
   protected readonly trending = signal<SteamApp[]>([]);
 
   ngOnInit(): void {
-    this.loadFeatured();
+    this.loadTrending();
     this.loadNews();
   }
 
-  private loadFeatured(): void {
+  private loadTrending(): void {
     this.steam.getFeaturedCategories().subscribe({
       next: (data: FeaturedCategoriesResponse) => {
         // Try to get games from different featured categories
@@ -52,8 +51,6 @@ export class HomeComponent implements OnInit {
             { appid: 2345678, name: 'The Witcher 3: Wild Hunt' }
           ];
         }
-        
-        this.featured.set(games);
         this.trending.set(games);
       },
       error: () => {
@@ -68,7 +65,6 @@ export class HomeComponent implements OnInit {
           { appid: 1234567, name: 'Red Dead Redemption 2' },
           { appid: 2345678, name: 'The Witcher 3: Wild Hunt' }
         ];
-        this.featured.set(fallbackGames);
         this.trending.set(fallbackGames);
       }
     });
