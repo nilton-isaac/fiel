@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface Tool {
   id: string;
@@ -23,7 +24,7 @@ interface Tool {
         <div 
           *ngFor="let tool of tools()" 
           class="group p-4 rounded-xl bg-gradient-to-br from-white/5 to-white/10 border border-white/20 hover:border-yellow-400/50 transition-all duration-300 hover:shadow-space cursor-pointer"
-          (click)="tool.action ? tool.action() : null"
+          (click)="tool.route ? router.navigate([tool.route]) : tool.action?.()"
         >
           <div class="flex items-center gap-3 mb-3">
             <span class="material-symbols-outlined text-2xl text-yellow-400 group-hover:scale-110 transition-transform duration-300">
@@ -53,6 +54,7 @@ interface Tool {
   styles: []
 })
 export class ToolsPanelComponent {
+  protected readonly router = inject(Router);
   protected readonly tools = signal<Tool[]>([
     {
       id: 'library',
