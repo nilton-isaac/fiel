@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface SteamApp {
@@ -57,6 +58,19 @@ interface AppListResponse {
   };
 }
 
+interface FeaturedCategory {
+  items: SteamApp[];
+}
+
+export interface FeaturedCategoriesResponse {
+  top_sellers: FeaturedCategory;
+  specials: FeaturedCategory;
+  popular_new_releases: FeaturedCategory;
+  coming_soon: FeaturedCategory;
+  new_releases: FeaturedCategory;
+  [key: string]: FeaturedCategory;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SteamService {
   private readonly http = inject(HttpClient);
@@ -70,8 +84,10 @@ export class SteamService {
     return this.http.get<{ [key: string]: SteamAppDetails }>(`/storeapi/api/appdetails?appids=${appid}&cc=br&l=portuguese`);
   }
 
-  getFeaturedCategories() {
-    return this.http.get('/storeapi/api/featuredcategories?cc=br&l=portuguese');
+  getFeaturedCategories(): Observable<FeaturedCategoriesResponse> {
+    return this.http.get<FeaturedCategoriesResponse>(
+      '/storeapi/api/featuredcategories?cc=br&l=portuguese'
+    );
   }
 
   getNewsForApp(appid: number, count = 5) {

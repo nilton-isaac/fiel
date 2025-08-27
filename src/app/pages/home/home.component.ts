@@ -4,7 +4,7 @@ import { NgFor, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { GameCardComponent } from '../../components/game-card/game-card.component';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
-import { SteamService, SteamApp } from '../../services/steam.service';
+import { SteamService, SteamApp, FeaturedCategoriesResponse } from '../../services/steam.service';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   private loadFeatured(): void {
     this.steam.getFeaturedCategories().subscribe({
-      next: (data: any) => {
+      next: (data: FeaturedCategoriesResponse) => {
         // Try to get games from different featured categories
         const categories = ['top_sellers', 'specials', 'popular_new_releases', 'coming_soon', 'new_releases'];
         let games: SteamApp[] = [];
